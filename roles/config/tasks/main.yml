@@ -1,0 +1,8 @@
+---
+# tasks file for config
+
+- name: "Set all variables as facts"
+  set_fact: |
+    {{ vars_string }}
+  vars:
+    vars_string: "{{ lookup('ansible.builtin.template', './vars/main.yml' ) }}"

@@ -1,0 +1,25 @@
+---
+# tasks file for system
+- name: "Copy files/ to / on a remote host"
+  become: true
+  copy:
+    src: "files/{{ ansible_distribution }}/"
+    dest: "/"
+  ignore_errors: true
+
+- name: "Create remote directories for templates"
+  become: true
+  file:
+    path: "/{{ item['path'] }}"
+    state: directory
+    recurse: true
+  when: item['state'] == 'directory'
+  loop: "{{ lookup('community.general.filetree', 'templates/' ~ ansible_distribution) }}"
+
+- name: "Template files out to a remote host"
+  become: true
+  template:
+    src: "{{ item['src'] }}"
+    dest: "/{{ item['path'] }}"
+  when: item['state'] == 'file'
+  loop: "{{ lookup('community.general.filetree', 'templates/' ~ ansible_distribution) }}"

@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=File Manager
+Exec={{ profile_terminal }} -e {{ profile_file_manager }} %u

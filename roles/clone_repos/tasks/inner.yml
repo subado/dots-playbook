@@ -1,0 +1,15 @@
+---
+- block:
+    - name: "Clone the repo {{ repo['name'] }} from the git server {{ server }}"
+      git:
+        repo: "git@{{ hostvars[server]['ansible_host'] }}:{{ repo['name'] }}"
+        dest: "{{ repo['dest'] }}"
+        accept_newhostkey: true
+
+    - name: "Include role to configure the repo {{ repo['name'] }}"
+      include_role: "{{ repo['role_path'] }}"
+      when: repo['role_path'] is defined
+
+  loop: "{{ hostvars[server]['repos'] }}"
+  loop_control:
+    loop_var: repo

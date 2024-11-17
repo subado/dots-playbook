@@ -1,0 +1,34 @@
+---
+# tasks file for controller
+- name: "Include OS specific vars"
+  include_vars:
+    file: "{{ ansible_distribution }}.yml"
+
+- name: "Add ssh keys to agent"
+  no_log: true
+  environment:
+    SSH_AUTH_SOCK: "{{ ssh_auth_sock }}"
+    SSH_ASKPASS: "{{ ssh_askpass }}"
+    DISPLAY: ""
+    SSH_ASKPASS_REQUIRE: "force"
+  command: ssh-add
+  vars:
+    ssh_auth_sock: "{{ lookup('env', 'SSH_AUTH_SOCK') }}"
+    ssh_askpass: "{{ playbook_dir ~ '/vault/localhost-ssh-askpass' }}"
+  when:
+    - ssh_auth_sock != None
+    - lookup('file', ssh_askpass) != None
+
+- name: "Install pip and venv packages for python3"
+  become: true
+  community.general.xbps:
+    name: "{{ controller_python3_packages }}"
+    update_cache: true
+
+- name: "Create a virtualenv in the {{playbook_dir}}"
+  pip:
+    chdir: "{{ playbook_dir }}"
+    requirements: "requirements.txt"
+    virtualenv: "{{ controller_virtualenv_path }}"
+    virtualenv_command: "{{ ansible_python_interpreter |
+    default(discovered_interpreter_python) }} -m venv"

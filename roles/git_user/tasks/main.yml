@@ -1,0 +1,27 @@
+---
+# tasks file for git_user
+
+- name: "Set up SSH for {{ inventory_hostname }}"
+  import_role:
+    name: ssh
+  vars:
+    ssh_ssh_key_type: "{{ git_user_ssh_key_type }}"
+
+- name: "Create a temporary directory for git users' public keys"
+  delegate_to: localhost
+  run_once: true
+  tempfile:
+    state: directory
+  register: git_users_keys_tmpdir
+
+- name: "Set the temporary directory as fact"
+  delegate_to: localhost
+  delegate_facts: true
+  run_once: true
+  set_fact:
+    git_users_keys_tmpdir: "{{ git_users_keys_tmpdir }}"
+
+- name: "Copy public key to the controller"
+  fetch:
+    src: "/home/{{ hostvars[inventory_hostname].ansible_user }}/.ssh/id_{{ git_user_ssh_key_type }}.pub"
+    dest: "{{ git_users_keys_tmpdir.path }}"

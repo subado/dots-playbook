@@ -1,0 +1,16 @@
+---
+# tasks file for packages
+- name: "Include OS specific vars"
+  include_vars:
+    file: "{{ role_path }}/vars/{{ ansible_distribution }}.yml"
+
+- name: "Include OS specific tasks"
+  include_tasks:
+    file: "{{ tasks_file }}"
+  when: "tasks_file is file"
+  vars:
+    tasks_file: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+
+- name: "Include default tasks"
+  include_tasks:
+    file: "default.yml"

@@ -1,0 +1,3 @@
+---
+# vars file for controller
+controller_virtualenv_path: "{{ playbook_dir }}/.venv"

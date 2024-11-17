@@ -1,0 +1,9 @@
+---
+# vars file for git_server
+repositories:
+  - path: "$PASSWORD_STORE_DIR"
+    destination: "$PASSWORD_STORE_DIR"
+  - repository: "git@github.com:subado/books"
+    destination: "$BOOKS_DIR"
+  - path: "$TASKDATA"
+    destination: "$TASKDATA"

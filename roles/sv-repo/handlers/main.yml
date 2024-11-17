@@ -1,0 +1,7 @@
+---
+# handlers file for sv-repo
+- name: Restart runsvdir process
+  become: true
+  community.general.runit:
+    name: "runsvdir-{{ ansible_user }}"
+    state: restarted

@@ -1,0 +1,16 @@
+---
+- name: "Install basic packages for {{ inventory_hostname }}"
+  become: true
+  community.general.xbps:
+    name: "{{ basic_packages }}"
+    update_cache: true
+  when: "basic_packages is defined"
+
+- name: "Install desktop packages for {{ inventory_hostname }}"
+  become: true
+  community.general.xbps:
+    name: "{{ desktop_packages }}"
+    update_cache: true
+  when:
+    - "'desktop' in group_names"
+    - "desktop_packages is defined"

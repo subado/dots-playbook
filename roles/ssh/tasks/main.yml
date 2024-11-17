@@ -1,0 +1,13 @@
+---
+# tasks file for ssh
+- name: Generate SSH key for "{{ inventory_hostname }}"
+  user:
+    name: "{{ ansible_user }}"
+    generate_ssh_key: true
+    ssh_key_type: "{{ ssh_ssh_key_type | default('ed25519') }}"
+    ssh_key_bits: 4096
+    ssh_key_passphrase: "{{ lookup(
+      'unvault',
+      'vault/' + inventory_hostname + '/ssh_key_passphrase'
+    )}}"
+    force: false

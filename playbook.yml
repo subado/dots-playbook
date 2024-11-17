@@ -1,0 +1,75 @@
+---
+- name: "Set up controller"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: controller
+  tags: controller
+
+- name: "Set up packages"
+  hosts: packages
+  roles:
+    - role: packages
+  tags: packages
+
+- name: "Set up dots"
+  hosts: dots
+  roles:
+    - role: dots
+  tags: dots
+
+- name: "Set up system"
+  hosts: system
+  roles:
+    - role: system
+  tags: system
+
+- name: "Set up service"
+  hosts: service
+  roles:
+    - role: service
+  tags: service
+
+- name: "Set up git users"
+  hosts: git_user
+  roles:
+    - role: git_user
+  tags: git_user, git
+
+- name: "Set up git servers"
+  hosts: git_server
+  roles:
+    - role: git_server
+  tags: git_server, git
+
+- name: "Set up git servers"
+  hosts: git_server
+  roles:
+    - role: git_server
+  tags: git_server, git
+
+- name: "Delete git users' public keys from localhost"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: delete_public_keys
+  tags: git_user, git
+
+- name: "Clone repos to localhost and copy to git servers"
+  hosts: repos
+  roles:
+    - role: repos
+  tags: repos, git
+
+- name: "Clone repos from git servers to git users"
+  hosts: clone_repos
+  roles:
+    - role: clone_repos
+  tags: clone_repos, git
+
+- name: "Delete repos from localhost"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: delete_repos
+  tags: delete_repos, git

@@ -1,0 +1,4 @@
+---
+controller_python3_packages:
+  - python3-pip
+  - python3-venv

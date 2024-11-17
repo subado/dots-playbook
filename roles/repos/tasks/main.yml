@@ -1,0 +1,10 @@
+---
+# tasks file for repos
+
+- name: "Set repos fact to {{ inventory_hostname }}"
+  set_fact:
+    repos: "{{ repos }}"
+
+- name: "Iterate over repos"
+  include_tasks: tasks/repo.yml
+  loop: "{{ repos }}"

@@ -1,0 +1,21 @@
+---
+# vars file for repos
+
+repos:
+  # - repo: "git@github.com:subado/books.git"
+  #   fact:
+  #     dest: "{{ profile_books_dir }}"
+
+  - repo: "git@github.com:subado/notes.git"
+    fact:
+      dest: "{{ profile_notes_dir }}"
+
+  - repo: "{{ lookup('env', 'HOME') }}/.local/share/password-store"
+    fact:
+      dest: "{{ profile_password_store_dir }}"
+      role_path: "{{ role_path | dirname }}/pass-repo"
+
+  - repo: "git@github.com:subado/sv.git"
+    fact:
+      dest: "{{ profile_svsrc }}"
+      role_path: "{{ role_path | dirname }}/sv-repo"

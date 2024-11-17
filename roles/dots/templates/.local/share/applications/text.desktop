@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Text editor
+Exec={{ profile_terminal }} -e {{ profile_editor }} %u

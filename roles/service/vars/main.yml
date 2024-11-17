@@ -1,0 +1,5 @@
+---
+# vars file for service
+
+runsvdir_service: "runsvdir-{{ ansible_user }}"
+runsvdir_path: "/etc/sv/{{ runsvdir_service }}"

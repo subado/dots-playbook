@@ -1,0 +1,6 @@
+---
+- name: "Iterate over repos of the {{ server }} and delete temp dirs used by it"
+  file:
+    state: absent
+    path: "{{ item['tempdir'].path }}"
+  loop: "{{ hostvars[server]['repos'] }}"

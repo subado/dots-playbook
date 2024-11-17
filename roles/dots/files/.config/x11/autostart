@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+
+# disable_device() {
+# 	device=$(xinput list | grep "$1")
+# 	[ "$device" ] && xinput float "$(awk '{
+# 		for (i=1;i<=NF;i++)
+# 		{
+#       if ($i ~ /id/) { printf "%s",$i; }
+# 		}
+#   }' <<-_EOF
+# "$device"
+# _EOF
+# | awk -F '=' '{print $2}')"
+# }
+# disable_device 'AT Translated'
+# disable_device 'AlpsPS/2 ALPS GlidePoint'
+# unset -f disable_device
+
+#set-resolution
+setbg
+xcompmgr &
+
+#disable_device 'AT Translated'
+#disable_device 'AlpsPS/2 ALPS GlidePoint'
+#unset -f disable_device
+
+xkeyboard-setup.sh

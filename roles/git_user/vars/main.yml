@@ -1,0 +1,3 @@
+---
+# vars file for git_user
+git_user_ssh_key_type: "ed25519"

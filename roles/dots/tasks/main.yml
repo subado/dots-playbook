@@ -1,0 +1,22 @@
+---
+# tasks file for dots
+
+- name: "Copy files/ to {{ home_dir }}"
+  copy:
+    src: files/
+    dest: "{{ home_dir }}"
+
+- name: "Create remote directories for templates"
+  file:
+    path: "{{ home_dir }}/{{ item['path'] }}"
+    state: directory
+    recurse: true
+  when: item['state'] == 'directory'
+  loop: "{{ lookup('community.general.filetree', 'templates/') }}"
+
+- name: "Template files out to a remote host"
+  template:
+    src: "{{ item['src'] }}"
+    dest: "{{ home_dir }}/{{ item['path'] }}"
+  when: item['state'] == 'file'
+  loop: "{{ lookup('community.general.filetree', 'templates/') }}"

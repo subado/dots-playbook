@@ -1,0 +1,31 @@
+---
+- block:
+    - name: "Create a temporary directory for a bare repo"
+      delegate_to: localhost
+      run_once: true
+      tempfile:
+        state: directory
+      register: tempdir
+
+    - name: "Clone a repo locally to get a bare repo"
+      delegate_to: localhost
+      run_once: true
+      git:
+        bare: true
+        repo: "{{ item['repo'] }}"
+        dest: "{{ tempdir.path }}/{{ name }}"
+        accept_newhostkey: true
+
+    - name: "Copy a bare repo to a git server ({{ inventory_hostname }})"
+      become: true
+      become_user: git
+      copy:
+        src: "{{ tempdir.path }}/{{ name }}/"
+        dest: "~/{{ name }}/"
+
+    - name: "Append the repo to the repos fact"
+      set_fact:
+        repos: "{{ repos + ( [ item['fact'] | combine({'name': name, 'tempdir': tempdir}, recursive=true)] ) }}"
+
+  vars:
+    name: "{{ item['repo'] | basename }}{% if not item['repo'].endswith('.git') %}.git{% endif %}"

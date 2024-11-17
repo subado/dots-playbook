@@ -1,0 +1,6 @@
+---
+- name: "Install required repositories for {{ inventory_hostname }}"
+  become: true
+  community.general.xbps:
+    name: "{{ repositories }}"
+    update_cache: true

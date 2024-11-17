@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$(id -u)" = "0" ]; then
+  LOG_DIR="/var/log/$1"
+else
+  LOG_DIR="$HOME/var/log/$1"
+fi
+
+[ -d "$LOG_DIR" ] || mkdir -p "$LOG_DIR"
+exec svlogd -tt "$LOG_DIR"

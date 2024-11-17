@@ -1,0 +1,35 @@
+#define BACKGROUND #151515
+#define FOREGROUND #E1E1E1
+#define CURSORCOLOR #D0D0D0
+
+! BLACK
+#define COLOR0 #202020
+#define COLOR8 #585B70
+
+! RED
+#define COLOR1 #984936
+#define COLOR9 #b46958
+
+! GREEN
+#define COLOR2 #586935
+#define COLOR10 #90A959
+
+! YELLOW
+#define COLOR3 #ab8550
+#define COLOR11 #F4BF75
+
+! BLUE
+#define COLOR4 #7E97AB
+#define COLOR12 #A2B5C1
+
+! MAGENTA
+#define COLOR5 #AA749F
+#define COLOR13 #AA759F
+
+! CYAN
+#define COLOR6 #578266
+#define COLOR14 #88afa2
+
+! WHITE
+#define COLOR7 #AFAFAF
+#define COLOR15 #E1E1E1

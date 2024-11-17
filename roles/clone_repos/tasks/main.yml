@@ -1,0 +1,7 @@
+---
+# tasks file for clone_repos
+- name: "Iterate through git servers"
+  include_tasks: "tasks/inner.yml"
+  loop: "{{ groups['git_server'] }}"
+  loop_control:
+    loop_var: server

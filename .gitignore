@@ -1,0 +1,5 @@
+vault/*
+!vault/README.md
+/host_vars/
+.vagrant/
+.venv/

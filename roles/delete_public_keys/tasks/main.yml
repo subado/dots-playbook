@@ -1,0 +1,5 @@
+---
+# tasks file for delete_public_keys
+- file:
+    state: absent
+    path: "{{ git_users_keys_tmpdir.path }}"

@@ -1,0 +1,6 @@
+---
+# tasks file for service
+
+- name: "Play platform specific actions"
+  include_tasks: "{{ ansible_distribution }}.yml"
+  ignore_errors: true

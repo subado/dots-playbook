@@ -1,0 +1,26 @@
+---
+- name: "Create a directory for the runsvdir service"
+  become: true
+  file:
+    path: "{{ runsvdir_path }}"
+    state: directory
+    recurse: true
+
+- name: "Template run file out to a remote host"
+  become: true
+  template:
+    src: "{{ ansible_distribution }}/runsvdir/run"
+    dest: "{{ runsvdir_path }}/run"
+
+- name: "Enable the runsvdir service"
+  become: true
+  file:
+    src: "{{ runsvdir_path }}"
+    dest: "/var/service/{{ runsvdir_service }}"
+    state: link
+
+- name: "Start the runsvdir service"
+  become: true
+  community.general.runit:
+    name: "{{ runsvdir_service }}"
+    state: started

@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# .profile
+
+add_path() {
+	export PATH="$PATH:${1%:}"
+}
+
+# XDG
+export XDG_CONFIG_HOME='{{ profile_xdg_config_home }}'
+export XDG_CACHE_HOME='{{ profile_xdg_cache_home }}'
+export XDG_DATA_HOME='{{ profile_xdg_data_home }}'
+export XDG_STATE_HOME='{{ profile_xdg_state_home }}'
+
+# shell
+export INPUTRC='{{ profile_inputrc }}'
+[ -r "$HOME/.bashrc" ] && source "$HOME/.bashrc"
+
+# X11
+export XINITRC='{{ profile_xinitrc }}'
+
+# Default programs
+export EDITOR='{{ profile_editor }}'
+export TERMINAL='{{ profile_terminal }}'
+export PAGER='{{ profile_pager }}'
+export BROWSER='{{ profile_browser }}'
+
+# Program settings
+export ANDROID_SDK_ROOT='{{ profile_android_sdk_root }}'                # Set the root dir for android sdk
+export SSH_AUTH_SOCK='{{ profile_ssh_auth_sock }}' # Required to use ssh-agent service
+export SVDIR='{{ profile_svdir }}'
+
+# Clean up ~/
+export PASSWORD_STORE_DIR='{{ profile_password_store_dir }}'
+export CARGO_HOME='{{ profile_cargo_home }}'
+export GNUPGHOME='{{ profile_gnupghome }}'
+export GOMODCACHE='{{ profile_gomodcache }}'
+export GOPATH='{{ profile_gopath }}'
+export TASKDATA='{{ profile_taskdata }}'
+
+# My scripts
+export BOOKS_DIR='{{ profile_books_dir }}'
+export DIARY_DIR='{{ profile_diary_dir }}'
+export VOLUME_MIXER='{{ profile_volume_mixer }}'
+export WIREGUARD_INTERFACE='{{ profile_wireguard_interface }}'
+
+# Program options
+export _JAVA_AWT_WM_NONREPARENTING=1  # Fix for Java applications in dwm
+export GTEST_COLOR=1                  # Google test framework output colorful
+export LESS='-M -F -I -R --incsearch' # Set up less
+export LESSOPEN='| lesspipe.sh %s'    # Syntax highlighting
+
+# Add local scripts and programs to PATH
+add_path "$(find ~/.local/bin -type d ! -path '*/\.git*' -printf %p:)"
+add_path "$XDG_DATA_HOME/nvim/mason/bin"
+add_path "$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/cmdline-tools/tools"
+add_path "$CARGO_HOME/bin"
+add_path "$GOPATH/bin"
+
+#Automatic startx
+command -v startx >/dev/null 2>&1 && [ "$(tty)" = '/dev/tty1' ] && ! pidof -s 'Xorg' >/dev/null 2>&1 && exec startx "$XINITRC" || true

@@ -1,0 +1,25 @@
+---
+# tasks file for pass-repo
+- name: "Copy secret key to remote machine"
+  copy:
+    src: "{{ secret_key_file }}"
+    dest: "{{ tmpfile.path }}"
+
+- name: "Import secret key from file"
+  command:
+    cmd: "gpg --import {{ tmpfile.path }}"
+  result: import_result
+
+- name: "Remove temp file on remote machine"
+  file:
+    path: "{{ tmpfile.path }}"
+    state: absent
+
+- name: "Trust secrey key"
+  command:
+    cmd: "gpg --edit-key {{ key_stat.stdout_lines[1] | trim }}, trust, 5, save"
+  when: "'secret keys unchanged: 1' not in import_result.out"
+
+- name: "Install password store"
+  community.general.xbps:
+    - pass

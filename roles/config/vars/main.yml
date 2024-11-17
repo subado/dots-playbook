@@ -1,0 +1,43 @@
+home_dir: "{{ ansible_env.HOME }}"
+gitignore_placeholder: "# gitignore"
+
+gitconfig_user_email: subado.main@gmail.com
+gitconfig_user_name: subado
+
+profile_xdg_config_home: "{{ home_dir }}/.config"
+profile_xdg_cache_home: "{{ home_dir }}/.cache"
+profile_xdg_data_home: "{{ home_dir }}/.local/share"
+profile_xdg_state_home: "{{ home_dir }}/.local/state"
+
+profile_inputrc: "{{ profile_xdg_config_home }}/shell/inputrc"
+profile_xinitrc: "{{ profile_xdg_config_home }}/x11/xinitrc"
+
+profile_android_sdk_root: "{{ home_dir }}/android"
+profile_svdir: "{{ profile_xdg_data_home }}/service"
+profile_svsrc: "{{ profile_xdg_config_home }}/sv"
+
+profile_editor: "nvim"
+profile_terminal: "alacritty"
+profile_pager: "less"
+profile_browser: "firefox"
+profile_file_manager: "nnn"
+profile_image_viewer: "sxiv"
+profile_pdf_reader: "zathura"
+profile_torrent_client: "qbittorrent"
+profile_video_player: "vlc"
+
+profile_ssh_auth_sock: "{{ ansible_env.TMPDIR | default('/tmp') }}/
+  ssh-agent.{{ ansible_user }}.socket"
+
+profile_password_store_dir: "{{ profile_xdg_data_home }}/password-store"
+profile_cargo_home: "{{ profile_xdg_data_home }}/cargo"
+profile_gnupghome: "{{ profile_xdg_data_home }}/gnupg"
+profile_gomodcache: "{{ profile_xdg_cache_home }}/go/mod"
+profile_gopath: "{{ profile_xdg_data_home }}/go"
+profile_taskdata: "{{ profile_xdg_data_home }}/task"
+
+profile_books_dir: "{{ home_dir }}/books"
+profile_notes_dir: "{{ home_dir }}/notes"
+profile_diary_dir: "{{ profile_notes_dir }}/diary"
+profile_volume_mixer: "pactl"
+profile_wireguard_interface: "wg0"
